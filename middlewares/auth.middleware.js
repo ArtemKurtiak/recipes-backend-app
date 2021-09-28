@@ -1,6 +1,6 @@
 const { User } = require('../database');
 const CustomError = require('../errors/CustomError');
-const { statusCodesEnum: { CONFLICT } } = require('../constants');
+const { statusCodesEnum: { CONFLICT, NOT_FOUND } } = require('../constants');
 
 module.exports = {
     checkUserExistsByParam: (paramName, objectToFind = 'body', dbName = paramName) => async (req, res, next) => {
@@ -23,6 +23,20 @@ module.exports = {
 
             if (user) {
                 throw new CustomError('Email already in use', CONFLICT);
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkUserExists: (req, res, next) => {
+        try {
+            const { user } = req;
+
+            if (!user) {
+                throw new CustomError('Invalid credentials', NOT_FOUND);
             }
 
             next();

@@ -31,5 +31,29 @@ module.exports = {
         } catch (e) {
             next(e);
         }
+    },
+
+    login: async (req, res, next) => {
+        try {
+            const { user } = req;
+            const { password } = req.body;
+
+            await passwordService.comparePassword(password, user.password);
+
+            const token = await jwtService.generateToken();
+
+            await Auth.create({
+                user: user._id,
+                token
+            });
+
+            res
+                .status(200)
+                .json({
+                    token
+                });
+        } catch (e) {
+            next(e);
+        }
     }
 };

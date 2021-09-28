@@ -5,10 +5,10 @@ const { validationMiddlewares } = require('../middlewares');
 const { authMiddlewares } = require('../middlewares');
 const { authValidators } = require('../validators');
 
-const { register } = authControllers;
+const { register, login } = authControllers;
 const { validateBySchema } = validationMiddlewares;
-const { registerValidator } = authValidators;
-const { checkUserExistsByParam, checkUserNotExists } = authMiddlewares;
+const { registerValidator, loginValidator } = authValidators;
+const { checkUserExistsByParam, checkUserNotExists, checkUserExists } = authMiddlewares;
 
 
 router.post('/sign_up',
@@ -16,5 +16,11 @@ router.post('/sign_up',
     checkUserExistsByParam('email', 'body'),
     checkUserNotExists,
     register);
+
+router.post('/login',
+    validateBySchema('body', loginValidator),
+    checkUserExistsByParam('email', 'body'),
+    checkUserExists,
+    login);
 
 module.exports = router;
