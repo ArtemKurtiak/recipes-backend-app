@@ -1,4 +1,5 @@
 module.exports = {
     auth: 'auth',
-    user: 'user'
+    user: 'user',
+    recipe: 'recipe'
 };

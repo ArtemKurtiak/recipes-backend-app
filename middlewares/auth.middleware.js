@@ -1,42 +1,25 @@
-const { User } = require('../database');
+const { Auth } = require('../database');
 const CustomError = require('../errors/CustomError');
-const { statusCodesEnum: { CONFLICT, NOT_FOUND } } = require('../constants');
+const { statusCodesEnum: { NOT_AUTHORIZED } } = require('../constants');
+const { jwtService } = require('../services');
 
 module.exports = {
-    checkUserExistsByParam: (paramName, objectToFind = 'body', dbName = paramName) => async (req, res, next) => {
+    checkAuthToken: async (req, res, next) => {
         try {
-            const paramValue = req[objectToFind][paramName];
+            const { authorization } = req.headers;
 
-            const user = await User.findOne({ [dbName]: paramValue });
-
-            req.user = user;
-
-            next();
-        } catch (e) {
-            next(e);
-        }
-    },
-
-    checkUserNotExists: (req, res, next) => {
-        try {
-            const { user } = req;
-
-            if (user) {
-                throw new CustomError('Email already in use', CONFLICT);
+            if (!authorization) {
+                throw new CustomError('Jwt token not found', NOT_AUTHORIZED);
             }
 
-            next();
-        } catch (e) {
-            next(e);
-        }
-    },
+            const token = authorization.split(' ')[1];
 
-    checkUserExists: (req, res, next) => {
-        try {
-            const { user } = req;
+            jwtService.verifyToken(token);
 
-            if (!user) {
-                throw new CustomError('Invalid credentials', NOT_FOUND);
+            const auth = await Auth.findOne({ token });
+
+            if (!auth) {
+                throw new CustomError('Jwt token expired', NOT_AUTHORIZED);
             }
 
             next();

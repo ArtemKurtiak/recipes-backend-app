@@ -2,13 +2,13 @@ const router = require('express').Router();
 
 const { authControllers } = require('../controllers');
 const { validationMiddlewares } = require('../middlewares');
-const { authMiddlewares } = require('../middlewares');
+const { userMiddlewares } = require('../middlewares');
 const { authValidators } = require('../validators');
 
 const { register, login } = authControllers;
 const { validateBySchema } = validationMiddlewares;
 const { registerValidator, loginValidator } = authValidators;
-const { checkUserExistsByParam, checkUserNotExists, checkUserExists } = authMiddlewares;
+const { checkUserExistsByParam, checkUserNotExists, checkUserExists } = userMiddlewares;
 
 
 router.post('/sign_up',
