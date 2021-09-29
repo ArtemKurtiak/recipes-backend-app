@@ -1,6 +1,6 @@
 const { documentUtil } = require('../utils');
 const { Recipe } = require('../database');
-const { statusCodesEnum: { SUCCESS, CREATED } } = require('../constants');
+const { statusCodesEnum: { SUCCESS, CREATED, NO_CONTENT } } = require('../constants');
 
 const { normalizeDocument } = documentUtil;
 
@@ -44,6 +44,20 @@ module.exports = {
             res
                 .status(SUCCESS)
                 .json(normalizedRecipe);
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    deleteRecipe: async (req, res, next) => {
+        try {
+            const { recipe_id } = req.params;
+
+            await Recipe.findByIdAndDelete(recipe_id);
+
+            res
+                .status(NO_CONTENT)
+                .json();
         } catch (e) {
             next(e);
         }

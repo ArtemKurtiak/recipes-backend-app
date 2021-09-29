@@ -7,7 +7,9 @@ const { recipesControllers } = require('../controllers');
 const { recipesValidators } = require('../validators');
 
 const { checkAuthToken } = authMiddlewares;
-const { getRecipes, createRecipe, updateRecipe } = recipesControllers;
+const {
+    getRecipes, createRecipe, updateRecipe, deleteRecipe
+} = recipesControllers;
 const { validateBySchema } = validationMiddlewares;
 const { checkUserExistsByParam, checkUserExists } = userMiddlewares;
 const { createRecipeValidator, updateRecipeValidator, correctIdValidator } = recipesValidators;
@@ -31,5 +33,11 @@ router.patch('/:recipe_id',
     checkUserExistsByParam('user', 'body', '_id'),
     checkUserExists,
     updateRecipe);
+
+router.delete('/:recipe_id',
+    validateBySchema('params', correctIdValidator),
+    checkRecipeExistsByParam('recipe_id', 'params', '_id'),
+    checkRecipeExists,
+    deleteRecipe);
 
 module.exports = router;
