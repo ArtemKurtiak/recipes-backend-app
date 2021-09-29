@@ -1,5 +1,6 @@
 module.exports = {
-    validationMiddlewares: require('./validation.middleware'),
     authMiddlewares: require('./auth.middleware'),
-    userMiddlewares: require('./user.middleware')
+    userMiddlewares: require('./user.middleware'),
+    recipesMiddlewares: require('./recipes.middleware'),
+    validationMiddlewares: require('./validation.middleware')
 };

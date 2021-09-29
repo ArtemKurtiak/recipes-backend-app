@@ -33,10 +33,11 @@ module.exports = {
 
     checkUserExists: (req, res, next) => {
         try {
+            const { user: userId } = req.body;
             const { user } = req;
 
-            if (!user) {
-                throw new CustomError('Invalid credentials', NOT_FOUND);
+            if (!user && userId) {
+                throw new CustomError('User not found', NOT_FOUND);
             }
 
             next();
