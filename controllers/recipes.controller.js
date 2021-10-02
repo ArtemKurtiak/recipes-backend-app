@@ -7,7 +7,7 @@ const { normalizeDocument } = documentUtil;
 module.exports = {
     getRecipes: async (req, res, next) => {
         try {
-            const recipes = await Recipe.find();
+            const recipes = await Recipe.find().select('-__v');
 
             res
                 .status(SUCCESS)

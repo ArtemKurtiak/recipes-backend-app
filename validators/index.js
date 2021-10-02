@@ -1,4 +1,5 @@
 module.exports = {
     authValidators: require('./schemas/auth.schema'),
-    recipesValidators: require('./schemas/recipes.schema')
+    recipesValidators: require('./schemas/recipes.schema'),
+    productsValidators: require('./schemas/products.schema')
 };

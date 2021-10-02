@@ -19,6 +19,11 @@ const RecipeSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: user,
         required: true
+    },
+    products: {
+        type: Array,
+        required: true,
+        default: []
     }
 }, { timestamps: true });
 

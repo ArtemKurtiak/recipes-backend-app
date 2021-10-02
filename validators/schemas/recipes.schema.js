@@ -1,5 +1,9 @@
 const Joi = require('joi');
 
+const productsValidators = require('./products.schema');
+
+const { createProductValidator } = productsValidators;
+
 const createRecipeValidator = Joi.object({
     name: Joi
         .string()
@@ -14,7 +18,10 @@ const createRecipeValidator = Joi.object({
         .trim()
         .min(24)
         .max(24)
-        .required()
+        .required(),
+    products: Joi
+        .array()
+        .items(createProductValidator)
 });
 
 const updateRecipeValidator = Joi.object({
