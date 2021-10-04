@@ -5,5 +5,6 @@ module.exports = {
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
     regExpEnum: require('./regex.enum'),
     statusCodesEnum: require('./statusCodes.enum'),
-    dbTablesEnum: require('./dbTables.enum')
+    dbTablesEnum: require('./dbTables.enum'),
+    recipesCategoriesEnum: require('./recipeCategories.enum')
 };

@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const { dbTablesEnum } = require('../../constants');
 
-const { recipe, user } = dbTablesEnum;
+const { recipe, user, recipe_category } = dbTablesEnum;
 
 const RecipeSchema = new Schema({
     name: {
@@ -24,6 +24,11 @@ const RecipeSchema = new Schema({
         type: Array,
         required: true,
         default: []
+    },
+    recipe_category: {
+        type: Schema.Types.ObjectId,
+        ref: recipe_category,
+        required: true
     }
 }, { timestamps: true });
 

@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
 const productsValidators = require('./products.schema');
+const { recipesCategoriesEnum } = require('../../constants');
 
 const { createProductValidator } = productsValidators;
 
@@ -21,7 +22,11 @@ const createRecipeValidator = Joi.object({
         .required(),
     products: Joi
         .array()
-        .items(createProductValidator)
+        .items(createProductValidator),
+    recipe_category: Joi
+        .string()
+        .valid(...Object.values(recipesCategoriesEnum))
+        .required()
 });
 
 const updateRecipeValidator = Joi.object({
@@ -36,6 +41,13 @@ const updateRecipeValidator = Joi.object({
         .trim()
         .min(24)
         .max(24),
+    products: Joi
+        .array()
+        .items(createProductValidator),
+    recipe_category: Joi
+        .string()
+        .valid(...Object.values(recipesCategoriesEnum))
+        .required()
 });
 
 const correctIdValidator = Joi.object({
