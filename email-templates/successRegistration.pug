@@ -1,0 +1,58 @@
+extends emailWrapper
+
+block content
+    style.
+        body {
+            margin: 0;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 36px;
+            font-family: 'Candara', sans-serif;
+            font-weight: 700;
+        }
+
+        .main {
+            margin-top: 40px;
+            font-size: 30px;
+            font-family: Candara, sans-serif;
+        }
+
+        .availabilities-title {
+            text-align: center;
+            font-size: 30px;
+            font-family: Candara, sans-serif;
+            text-decoration: underline;
+            margin-bottom: 10px;
+        }
+
+        .services-list {
+            list-style: none;
+            text-align: center;
+            width: 100%;
+        }
+
+        .service-item {
+            max-width: 400px;
+            margin: 0 auto;
+            font-size: 26px;
+            font-family: Candara, sans-serif;
+            font-weight: 600;
+            text-align: left;
+            line-height: 35px;
+            padding-bottom: 10px;
+        }
+    header.header
+        img(src='https://recipes-application.s3.us-east-2.amazonaws.com/logo.png' alt='')
+        .header-title Thank you for registration in our service!
+    main.main
+        h3.availabilities-title Now you can:
+        div.services-list
+            p.service-item &#10003; Share your recipes with other users
+            p.service-item &#10003; Cook meals by recipes of other user
+            p.service-item &#10003; Contact user if you have any questions
+

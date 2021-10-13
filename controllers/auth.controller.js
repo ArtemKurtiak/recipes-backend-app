@@ -1,13 +1,11 @@
 const { Auth, User } = require('../database');
-const { statusCodesEnum: { CREATED } } = require('../constants');
-const { jwtService, passwordService } = require('../services');
-
-
+const { statusCodesEnum: { CREATED }, emailsEnum } = require('../constants');
+const { jwtService, passwordService, emailService } = require('../services');
 
 module.exports = {
     register: async (req, res, next) => {
         try {
-            const { password } = req.body;
+            const { password, email } = req.body;
 
             const hashedPassword = await passwordService.hashPassword(password);
 
@@ -22,6 +20,8 @@ module.exports = {
                 user: user._id,
                 token
             });
+
+            await emailService.sendEmail(email, emailsEnum.successRegistration);
 
             res
                 .status(CREATED)

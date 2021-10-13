@@ -3,9 +3,10 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-const { PORT } = require('./constants');
+const { PORT, emailsEnum } = require('./constants');
 const { authRouter, recipesRouter } = require('./routers');
 const { MONGODB_URI } = require('./constants');
+const { emailService } = require('./services');
 
 mongoose.connect(MONGODB_URI);
 
