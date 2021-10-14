@@ -3,10 +3,9 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-const { PORT, emailsEnum } = require('./constants');
-const { authRouter, recipesRouter } = require('./routers');
+const { PORT } = require('./constants');
+const { authRouter, recipesRouter, recipesCommentsRouter } = require('./routers');
 const { MONGODB_URI } = require('./constants');
-const { emailService } = require('./services');
 
 mongoose.connect(MONGODB_URI);
 
@@ -18,6 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/auth', authRouter);
 
 app.use('/api/recipes', recipesRouter);
+
+app.use('/api/recipes_comments', recipesCommentsRouter);
 
 app.use(errorHandler);
 

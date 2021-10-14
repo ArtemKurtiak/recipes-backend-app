@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
 
-const { dbTablesEnum } = require('../../constants');
+const { dbTablesEnum, recipesCategoriesEnum } = require('../../constants');
 
-const { recipe, user, recipe_category } = dbTablesEnum;
+const { recipe, user } = dbTablesEnum;
 
 const RecipeSchema = new Schema({
     name: {
@@ -25,11 +25,16 @@ const RecipeSchema = new Schema({
         required: true,
         default: []
     },
+    comments: {
+        type: Array,
+        required: true,
+        default: []
+    },
     recipe_category: {
-        type: Schema.Types.ObjectId,
-        ref: recipe_category,
-        required: true
-    }
+        type: String,
+        required: true,
+        enum: Object.values(recipesCategoriesEnum)
+    },
 }, { timestamps: true });
 
 module.exports = model(recipe, RecipeSchema);
