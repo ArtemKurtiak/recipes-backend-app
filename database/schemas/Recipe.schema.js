@@ -30,6 +30,11 @@ const RecipeSchema = new Schema({
         required: true,
         default: []
     },
+    ratings: {
+        type: Array,
+        required: true,
+        default: []
+    },
     recipe_category: {
         type: String,
         required: true,

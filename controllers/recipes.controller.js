@@ -1,13 +1,24 @@
 const { documentUtil } = require('../utils');
 const { Recipe } = require('../database');
 const { statusCodesEnum: { SUCCESS, CREATED, NO_CONTENT } } = require('../constants');
+const { recipesQueryBuilder } = require('../helpers');
 
 const { normalizeDocument } = documentUtil;
 
 module.exports = {
     getRecipes: async (req, res, next) => {
         try {
-            const recipes = await Recipe.find().select('-__v');
+            const [
+                filter,
+                skipAmount,
+                sortQuery
+            ] = recipesQueryBuilder(req.query);
+
+            const recipes = await Recipe
+                .find(filter)
+                .skip(skipAmount)
+                .sort(sortQuery)
+                .select('-__v');
 
             res
                 .status(SUCCESS)

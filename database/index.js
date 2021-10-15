@@ -3,5 +3,6 @@ module.exports = {
     User: require('./schemas/User.schema'),
     Recipe: require('./schemas/Recipe.schema'),
     RecipeCategory: require('./schemas/RecipeCategory.schema'),
-    RecipeComment: require('./schemas/RecipeComment.shema')
+    RecipeComment: require('./schemas/RecipeComment.shema'),
+    RecipeRating: require('./schemas/RecipeRating.schema')
 };

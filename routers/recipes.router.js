@@ -12,12 +12,16 @@ const {
 } = recipesControllers;
 const { validateBySchema } = validationMiddlewares;
 const { checkUserExistsByParam, checkUserExists } = userMiddlewares;
-const { createRecipeValidator, updateRecipeValidator, correctIdValidator } = recipesValidators;
+const {
+    createRecipeValidator, updateRecipeValidator, correctIdValidator, correctQueryValidator
+} = recipesValidators;
 const { checkRecipeExistsByParam, checkRecipeExists } = recipesMiddlewares;
 
 router.use(checkAuthToken);
 
-router.get('/', getRecipes);
+router.get('/',
+    validateBySchema('query', correctQueryValidator),
+    getRecipes);
 
 router.post('/',
     validateBySchema('body', createRecipeValidator),
