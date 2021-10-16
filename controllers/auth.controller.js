@@ -1,4 +1,4 @@
-const { Auth, User } = require('../database');
+const { Auth, User, Cart } = require('../database');
 const { statusCodesEnum: { CREATED }, emailsEnum } = require('../constants');
 const { jwtService, passwordService, emailService } = require('../services');
 
@@ -19,6 +19,10 @@ module.exports = {
             await Auth.create({
                 user: user._id,
                 token
+            });
+
+            await Cart.create({
+                user: user._id
             });
 
             await emailService.sendEmail(email, emailsEnum.successRegistration);

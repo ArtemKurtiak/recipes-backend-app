@@ -1,5 +1,6 @@
 module.exports = {
     authMiddlewares: require('./auth.middleware'),
+    cartMiddlewares: require('./cart.middleware'),
     userMiddlewares: require('./user.middleware'),
     recipesMiddlewares: require('./recipes.middleware'),
     recipesCommentsMiddlewares: require('./recipesComments.middleware'),

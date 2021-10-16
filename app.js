@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const { PORT } = require('./constants');
 const {
-    authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter
+    authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter, cartRouter
 } = require('./routers');
 const { MONGODB_URI } = require('./constants');
 
@@ -23,6 +23,8 @@ app.use('/api/recipes', recipesRouter);
 app.use('/api/recipes_comments', recipesCommentsRouter);
 
 app.use('/api/recipe/rate', recipeRatingRouter);
+
+app.use('/api/cart', cartRouter);
 
 app.use(errorHandler);
 

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const {
-    authMiddlewares, validationMiddlewares, userMiddlewares, recipesMiddlewares
+    authMiddlewares, validationMiddlewares, recipesMiddlewares
 } = require('../middlewares');
 const { recipesControllers } = require('../controllers');
 const { recipesValidators } = require('../validators');
@@ -11,7 +11,6 @@ const {
     getRecipes, createRecipe, updateRecipe, deleteRecipe
 } = recipesControllers;
 const { validateBySchema } = validationMiddlewares;
-const { checkUserExistsByParam, checkUserExists } = userMiddlewares;
 const {
     createRecipeValidator, updateRecipeValidator, correctIdValidator, correctQueryValidator
 } = recipesValidators;
@@ -25,8 +24,6 @@ router.get('/',
 
 router.post('/',
     validateBySchema('body', createRecipeValidator),
-    checkUserExistsByParam('user', 'body', '_id'),
-    checkUserExists,
     createRecipe);
 
 router.patch('/:recipe_id',
@@ -34,8 +31,6 @@ router.patch('/:recipe_id',
     validateBySchema('params', correctIdValidator),
     checkRecipeExistsByParam('recipe_id', 'params', '_id'),
     checkRecipeExists,
-    checkUserExistsByParam('user', 'body', '_id'),
-    checkUserExists,
     updateRecipe);
 
 router.delete('/:recipe_id',

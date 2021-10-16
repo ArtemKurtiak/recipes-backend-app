@@ -14,12 +14,6 @@ const createRecipeValidator = Joi.object({
         .string()
         .trim()
         .required(),
-    user: Joi
-        .string()
-        .trim()
-        .min(24)
-        .max(24)
-        .required(),
     products: Joi
         .array()
         .items(createProductValidator),
@@ -36,11 +30,6 @@ const updateRecipeValidator = Joi.object({
     description: Joi
         .string()
         .trim(),
-    user: Joi
-        .string()
-        .trim()
-        .min(24)
-        .max(24),
     products: Joi
         .array()
         .items(createProductValidator),
@@ -55,11 +44,6 @@ const correctQueryValidator = Joi.object({
         .string()
         .trim()
         .valid(...Object.values(recipesCategoriesEnum)),
-    user: Joi
-        .string()
-        .trim()
-        .min(24)
-        .max(24)
 });
 
 const correctIdValidator = Joi.object({

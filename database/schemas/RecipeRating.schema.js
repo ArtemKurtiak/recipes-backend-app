@@ -24,6 +24,6 @@ const RecipeRatingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: recipe
     }
-});
+}, { timestamps: true });
 
 module.exports = model('recipe_rating', RecipeRatingSchema);

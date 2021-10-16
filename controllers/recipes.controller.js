@@ -30,8 +30,11 @@ module.exports = {
 
     createRecipe: async (req, res, next) => {
         try {
+            const { _id } = req.auth;
+
             const recipe = await Recipe.create({
-                ...req.body
+                ...req.body,
+                user: _id
             });
 
             const normalizedRecipe = normalizeDocument(recipe);

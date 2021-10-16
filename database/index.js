@@ -4,5 +4,6 @@ module.exports = {
     Recipe: require('./schemas/Recipe.schema'),
     RecipeCategory: require('./schemas/RecipeCategory.schema'),
     RecipeComment: require('./schemas/RecipeComment.shema'),
-    RecipeRating: require('./schemas/RecipeRating.schema')
+    RecipeRating: require('./schemas/RecipeRating.schema'),
+    Cart: require('./schemas/Cart.schema')
 };
