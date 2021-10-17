@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-const { PORT } = require('./constants');
 const {
     authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter, cartRouter
 } = require('./routers');
+const cronJobRun = require('./cron-jobs');
+const { PORT } = require('./constants');
 const { MONGODB_URI } = require('./constants');
 
 mongoose.connect(MONGODB_URI);
@@ -39,4 +40,5 @@ function errorHandler(error, req, res, _) {
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
+    cronJobRun();
 });
