@@ -36,7 +36,6 @@ const updateRecipeValidator = Joi.object({
     recipe_category: Joi
         .string()
         .valid(...Object.values(recipesCategoriesEnum))
-        .required()
 });
 
 const correctQueryValidator = Joi.object({

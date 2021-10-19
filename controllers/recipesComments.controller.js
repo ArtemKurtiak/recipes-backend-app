@@ -8,9 +8,11 @@ module.exports = {
     createRecipeComment: async (req, res, next) => {
         try {
             const { recipe_id } = req.body;
+            const { user } = req.auth;
 
             const recipeComment = await RecipeComment.create({
-                ...req.body
+                ...req.body,
+                user
             });
 
             await Recipe.findOneAndUpdate(

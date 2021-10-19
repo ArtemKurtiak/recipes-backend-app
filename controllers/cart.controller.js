@@ -1,5 +1,5 @@
 const { Cart } = require('../database');
-const { statusCodesEnum: { CREATED, NO_CONTENT, SUCCESS }, dbTablesEnum } = require('../constants');
+const { statusCodesEnum: { CREATED, NO_CONTENT, SUCCESS } } = require('../constants');
 
 module.exports = {
     addRecipeToCart: async (req, res, next) => {

@@ -30,7 +30,7 @@ module.exports = {
 
     createRecipe: async (req, res, next) => {
         try {
-            const { _id } = req.auth;
+            const { _id } = req.auth.user;
 
             const recipe = await Recipe.create({
                 ...req.body,

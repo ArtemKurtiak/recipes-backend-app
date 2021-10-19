@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const { dbTablesEnum } = require('../../constants');
 
-const { user, recipe } = dbTablesEnum;
+const { user, recipe, recipe_rating } = dbTablesEnum;
 
 const RecipeRatingSchema = new Schema({
     rating: {
@@ -26,4 +26,4 @@ const RecipeRatingSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = model('recipe_rating', RecipeRatingSchema);
+module.exports = model(recipe_rating, RecipeRatingSchema);

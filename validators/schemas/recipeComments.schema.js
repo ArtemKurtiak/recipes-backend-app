@@ -10,12 +10,6 @@ const createRecipeCommentValidator = Joi.object({
         .trim()
         .min(24)
         .max(24)
-        .required(),
-    user: Joi
-        .string()
-        .trim()
-        .min(24)
-        .max(24)
         .required()
 });
 

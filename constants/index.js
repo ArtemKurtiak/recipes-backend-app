@@ -10,5 +10,6 @@ module.exports = {
     statusCodesEnum: require('./statusCodes.enum'),
     dbTablesEnum: require('./dbTables.enum'),
     recipesCategoriesEnum: require('./recipeCategories.enum'),
-    emailsEnum: require('./emails.enum')
+    emailsEnum: require('./emails.enum'),
+    recipeSchemaFieldsEnum: require('./recipeSchemaFields.enum')
 };
