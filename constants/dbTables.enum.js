@@ -6,6 +6,11 @@ module.exports = {
     recipe_comment: 'recipe_comment',
     recipe_rating: 'recipe_rating',
     recipe_id: 'recipe_id',
-    follower: 'follower',
-    version: '__v'
+    version: '__v',
+    followersCount: 'followersCount',
+    followsForCount: 'followsForCount',
+    password: 'password',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    id: 'id'
 };

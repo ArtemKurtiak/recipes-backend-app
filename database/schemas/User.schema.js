@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const { dbTablesEnum } = require('../../constants');
 
-const { user } = dbTablesEnum;
+const { user, followersCount, followsForCount } = dbTablesEnum;
 
 const UserSchema = new Schema({
     username: {
@@ -19,7 +19,17 @@ const UserSchema = new Schema({
         type: String,
         trim: true,
         required: true
-    }
-}, { timestamps: true });
+    },
+    followers: [{ type: Schema.Types.ObjectId, ref: user }],
+    followsFor: [{ type: Schema.Types.ObjectId, ref: user }]
+}, { timestamps: true, toJSON: { virtuals: true } });
+
+UserSchema.virtual(followersCount).get(function() {
+    return this.followers.length;
+});
+
+UserSchema.virtual(followsForCount).get(function() {
+    return this.followsFor.length;
+});
 
 module.exports = model(user, UserSchema);

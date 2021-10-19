@@ -3,7 +3,9 @@ const CustomError = require('../errors/CustomError');
 const { statusCodesEnum: { NOT_AUTHORIZED }, dbTablesEnum } = require('../constants');
 const { jwtService } = require('../services');
 
-const { user } = dbTablesEnum;
+const {
+    user, password, createdAt, updatedAt, id
+} = dbTablesEnum;
 
 module.exports = {
     checkAuthToken: async (req, res, next) => {
@@ -18,7 +20,9 @@ module.exports = {
 
             jwtService.verifyToken(token);
 
-            const auth = await Auth.findOne({ token }).populate(user);
+            const auth = await Auth
+                .findOne({ token })
+                .populate({ path: user, select: `-${password} -${createdAt} -${updatedAt} -${id}` });
 
             req.auth = auth;
 

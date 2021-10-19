@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const {
-    authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter, cartRouter
+    authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter, cartRouter, userRouter
 } = require('./routers');
 const cronJobRun = require('./cron-jobs');
 const { PORT } = require('./constants');
@@ -26,6 +26,8 @@ app.use('/api/recipes_comments', recipesCommentsRouter);
 app.use('/api/recipe/rate', recipeRatingRouter);
 
 app.use('/api/cart', cartRouter);
+
+app.use('/api/user', userRouter);
 
 app.use(errorHandler);
 
