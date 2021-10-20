@@ -45,4 +45,49 @@ module.exports = {
             next(e);
         }
     },
+
+    checkUserAlreadyFollowing: (req, res, next) => {
+        try {
+            const { user } = req.auth;
+            const { user: userToFollow } = req.body;
+
+            if (user.followsFor.includes(userToFollow)) {
+                throw new CustomError('You are already following this user', CONFLICT);
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkUserNotToFollowYourSelf: (req, res, next) => {
+        try {
+            const { _id: currentUserId } = req.auth.user;
+            const { user } = req.body;
+
+            if (user === currentUserId.toString()) {
+                throw new CustomError('You can`t follow yourself', CONFLICT);
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkUserFollowing: (req, res, next) => {
+        try {
+            const { user } = req.auth;
+            const { user: userToFollow } = req.body;
+
+            if (!user.followsFor.includes(userToFollow)) {
+                throw new CustomError('You don`t follow this user.', CONFLICT);
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    }
 };

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const followUserValidator = Joi.object({
+const correctUserIdValidator = Joi.object({
     user: Joi
         .string()
         .trim()
@@ -10,5 +10,5 @@ const followUserValidator = Joi.object({
 });
 
 module.exports = {
-    followUserValidator
+    correctUserIdValidator
 };
