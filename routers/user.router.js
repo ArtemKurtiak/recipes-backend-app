@@ -6,11 +6,17 @@ const { userValidators } = require('../validators');
 
 const { checkAuthToken } = authMiddlewares;
 const {
-    checkUserExistsByParam, checkUserExists, checkUserAlreadyFollowing, checkUserNotToFollowYourSelf, checkUserFollowing
+    checkUserExistsByParam,
+    checkUserExists,
+    checkUserAlreadyFollowing,
+    checkUserNotToFollowYourSelf,
+    checkUserFollowing
 } = userMiddlewares;
 const { validateBySchema } = validationMiddlewares;
-const { getMe, followUser, unfollowUser } = userControllers;
-const { correctUserIdValidator } = userValidators;
+const {
+    getMe, followUser, unfollowUser, getUserFollowers, getUserFollowsFor
+} = userControllers;
+const { correctUserIdValidator, followersValidator } = userValidators;
 
 router.use(checkAuthToken);
 
@@ -30,5 +36,13 @@ router.post('/unfollow',
     checkUserExists,
     checkUserFollowing,
     unfollowUser);
+
+router.get('/followers',
+    validateBySchema('query', followersValidator),
+    getUserFollowers);
+
+router.get('/follows_for',
+    validateBySchema('query', followersValidator),
+    getUserFollowsFor);
 
 module.exports = router;

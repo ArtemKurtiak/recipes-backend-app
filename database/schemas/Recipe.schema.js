@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const { dbTablesEnum, recipesCategoriesEnum, recipeSchemaFieldsEnum } = require('../../constants');
 
 const {
-    recipe, user, recipe_comment, recipe_rating, version, recipe_id
+    recipe, user, recipe_comment, recipe_rating, version, recipe_id, likes_count
 } = dbTablesEnum;
 const { comments, ratings } = recipeSchemaFieldsEnum;
 
@@ -35,7 +35,12 @@ const RecipeSchema = new Schema({
         required: true,
         enum: Object.values(recipesCategoriesEnum)
     },
-}, { timestamps: true });
+    likes: [{ type: Schema.Types.ObjectId, ref: user }],
+    views: {
+        type: Number,
+        default: 0
+    }
+}, { timestamps: true, toJSON: { virtuals: true } });
 
 function populateSchema() {
     this.populate({
@@ -59,5 +64,9 @@ function populateSchema() {
 RecipeSchema.pre('find', populateSchema);
 
 RecipeSchema.pre('findOneAndUpdate', populateSchema);
+
+RecipeSchema.virtual(likes_count).get(function() {
+    return this.likes.length;
+});
 
 module.exports = model(recipe, RecipeSchema);

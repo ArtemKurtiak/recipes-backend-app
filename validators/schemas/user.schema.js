@@ -9,6 +9,15 @@ const correctUserIdValidator = Joi.object({
         .required()
 });
 
+const followersValidator = Joi.object({
+    user: Joi
+        .string()
+        .trim()
+        .min(24)
+        .max(24)
+});
+
 module.exports = {
-    correctUserIdValidator
+    correctUserIdValidator,
+    followersValidator
 };

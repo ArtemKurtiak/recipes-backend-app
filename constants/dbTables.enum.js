@@ -9,8 +9,11 @@ module.exports = {
     version: '__v',
     followersCount: 'followersCount',
     followsForCount: 'followsForCount',
+    followers: 'followers',
+    followsFor: 'followsFor',
     password: 'password',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    id: 'id'
+    id: 'id',
+    likes_count: 'likes_count'
 };

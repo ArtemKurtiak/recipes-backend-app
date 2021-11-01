@@ -8,13 +8,13 @@ const { recipesValidators } = require('../validators');
 
 const { checkAuthToken } = authMiddlewares;
 const {
-    getRecipes, createRecipe, updateRecipe, deleteRecipe
+    getRecipes, createRecipe, updateRecipe, deleteRecipe, likeRecipe, viewRecipe
 } = recipesControllers;
 const { validateBySchema } = validationMiddlewares;
 const {
-    createRecipeValidator, updateRecipeValidator, correctIdValidator, correctQueryValidator
+    createRecipeValidator, updateRecipeValidator, correctIdValidator, correctQueryValidator, reactForRecipeValidator
 } = recipesValidators;
-const { checkRecipeExistsByParam, checkRecipeExists } = recipesMiddlewares;
+const { checkRecipeExistsByParam, checkRecipeExists, checkRecipeAlreadyLiked } = recipesMiddlewares;
 
 router.use(checkAuthToken);
 
@@ -38,5 +38,14 @@ router.delete('/:recipe_id',
     checkRecipeExistsByParam('recipe_id', 'params', '_id'),
     checkRecipeExists,
     deleteRecipe);
+
+router.post('/like',
+    validateBySchema('body', reactForRecipeValidator),
+    checkRecipeAlreadyLiked,
+    likeRecipe);
+
+router.post('/view',
+    validateBySchema('body', reactForRecipeValidator),
+    viewRecipe);
 
 module.exports = router;

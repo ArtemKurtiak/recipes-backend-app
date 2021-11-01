@@ -54,9 +54,18 @@ const correctIdValidator = Joi.object({
         .required()
 });
 
+const reactForRecipeValidator = Joi.object({
+    recipe: Joi
+        .string()
+        .min(24)
+        .max(24)
+        .required()
+});
+
 module.exports = {
     correctIdValidator,
     createRecipeValidator,
     updateRecipeValidator,
-    correctQueryValidator
+    correctQueryValidator,
+    reactForRecipeValidator
 };

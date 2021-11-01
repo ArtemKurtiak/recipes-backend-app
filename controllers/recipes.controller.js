@@ -75,5 +75,42 @@ module.exports = {
         } catch (e) {
             next(e);
         }
+    },
+
+    likeRecipe: async (req, res, next) => {
+        try {
+            const { _id } = req.auth.user;
+            const { recipe } = req.body;
+
+            await Recipe.findByIdAndUpdate(recipe, {
+                $push: {
+                    likes: [_id]
+                }
+            }, { new: true });
+
+            res
+                .status(NO_CONTENT)
+                .json();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    viewRecipe: async (req, res, next) => {
+        try {
+            const { recipe } = req.body;
+
+            await Recipe.findByIdAndUpdate(recipe, {
+                $inc: {
+                    views: 1
+                }
+            });
+
+            res
+                .status(NO_CONTENT)
+                .json();
+        } catch (e) {
+            next(e);
+        }
     }
 };
