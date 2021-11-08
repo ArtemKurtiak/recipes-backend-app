@@ -54,7 +54,7 @@ const correctIdValidator = Joi.object({
         .required()
 });
 
-const reactForRecipeValidator = Joi.object({
+const reactionsForRecipeValidator = Joi.object({
     recipe: Joi
         .string()
         .min(24)
@@ -67,5 +67,5 @@ module.exports = {
     createRecipeValidator,
     updateRecipeValidator,
     correctQueryValidator,
-    reactForRecipeValidator
+    reactionsForRecipeValidator
 };

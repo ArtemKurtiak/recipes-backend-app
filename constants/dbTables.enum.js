@@ -15,5 +15,6 @@ module.exports = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     id: 'id',
-    likes_count: 'likes_count'
+    likes_count: 'likes_count',
+    likes: 'likes'
 };

@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const socketIo = require('socket.io');
+const http = require('http');
 
 require('dotenv').config();
 
@@ -7,12 +9,12 @@ const {
     authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter, cartRouter, userRouter
 } = require('./routers');
 const cronJobRun = require('./cron-jobs');
-const { PORT } = require('./constants');
-const { MONGODB_URI } = require('./constants');
-
-mongoose.connect(MONGODB_URI);
+const { joinSocketHandler, messageSocketHandler } = require('./sockets');
+const { PORT, socketEventsEnum, MONGODB_URI } = require('./constants');
 
 const app = express();
+
+mongoose.connect(MONGODB_URI);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,7 +42,16 @@ function errorHandler(error, req, res, _) {
         .json({ message });
 }
 
-app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
+const server = http.createServer(app).listen(PORT, () => {
     cronJobRun();
+    console.log(`Server started on port ${PORT}`);
 });
+
+const io = socketIo(server);
+
+io.on(socketEventsEnum.CONNECTION, connectionHandler);
+
+function connectionHandler(client) {
+    client.on(socketEventsEnum.JOIN, joinSocketHandler(client, io));
+    client.on(socketEventsEnum.MESSAGE, messageSocketHandler(client, io));
+}

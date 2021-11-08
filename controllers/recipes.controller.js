@@ -1,9 +1,10 @@
 const { documentUtil } = require('../utils');
 const { Recipe } = require('../database');
-const { statusCodesEnum: { SUCCESS, CREATED, NO_CONTENT } } = require('../constants');
+const { statusCodesEnum: { SUCCESS, CREATED, NO_CONTENT }, dbTablesEnum } = require('../constants');
 const { recipesQueryBuilder } = require('../helpers');
 
 const { normalizeDocument } = documentUtil;
+const { likes } = dbTablesEnum;
 
 module.exports = {
     getRecipes: async (req, res, next) => {
@@ -109,6 +110,20 @@ module.exports = {
             res
                 .status(NO_CONTENT)
                 .json();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    getRecipeLikes: async (req, res, next) => {
+        try {
+            const { recipe } = req.body;
+
+            const { likes: recipeLikes } = await Recipe.findById(recipe).populate(likes);
+
+            res
+                .status(SUCCESS)
+                .json({ likes: recipeLikes, count: likes.length });
         } catch (e) {
             next(e);
         }
