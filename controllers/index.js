@@ -5,6 +5,5 @@ module.exports = {
     recipesCommentsControllers: require('./recipesComments.controller'),
     recipeRatingControllers: require('./recipeRating.controller'),
     userControllers: require('./user.controller'),
-    subscriptionControllers: require('./subscription.controller'),
-    notificationControllers: require('./notification.controller')
+    subscriptionControllers: require('./subscription.controller')
 };

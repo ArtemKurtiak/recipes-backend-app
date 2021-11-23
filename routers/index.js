@@ -5,6 +5,5 @@ module.exports = {
     recipesCommentsRouter: require('./recipe_comments.router'),
     recipeRatingRouter: require('./recipe_rating.router'),
     userRouter: require('./user.router'),
-    subscriptionRouter: require('./subscription.router'),
-    notificationRouter: require('./notification.router')
+    subscriptionRouter: require('./subscription.router')
 };
