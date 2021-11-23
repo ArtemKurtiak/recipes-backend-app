@@ -12,13 +12,15 @@ module.exports = {
             const [
                 filter,
                 skipAmount,
-                sortQuery
+                sortQuery,
+                limit
             ] = recipesQueryBuilder(req.query);
 
             const recipes = await Recipe
                 .find(filter)
                 .skip(skipAmount)
                 .sort(sortQuery)
+                .limit(limit)
                 .select('-__v');
 
             res

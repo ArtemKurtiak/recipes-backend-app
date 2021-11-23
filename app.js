@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
@@ -6,13 +7,15 @@ const http = require('http');
 require('dotenv').config();
 
 const {
-    authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter, cartRouter, userRouter
+    authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter, cartRouter, userRouter, subscriptionRouter
 } = require('./routers');
 const cronJobRun = require('./cron-jobs');
 const { joinSocketHandler, messageSocketHandler } = require('./sockets');
 const { PORT, socketEventsEnum, MONGODB_URI } = require('./constants');
 
 const app = express();
+
+app.use(cors({ origin: '*' }));
 
 mongoose.connect(MONGODB_URI);
 
@@ -30,6 +33,8 @@ app.use('/api/recipe/rate', recipeRatingRouter);
 app.use('/api/cart', cartRouter);
 
 app.use('/api/user', userRouter);
+
+app.use('/api/subscribe', subscriptionRouter);
 
 app.use(errorHandler);
 

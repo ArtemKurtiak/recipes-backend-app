@@ -39,6 +39,14 @@ const RecipeSchema = new Schema({
     views: {
         type: Number,
         default: 0
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    time: {
+        type: Number,
+        required: true
     }
 }, { timestamps: true, toJSON: { virtuals: true } });
 

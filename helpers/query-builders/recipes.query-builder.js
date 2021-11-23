@@ -23,13 +23,18 @@ const recipesQueryBuilder = (query) => {
                 break;
             case 'user':
                 filterObject.user = { $eq: props[propKey] };
+                break;
+            case 'name':
+                filterObject.name = { $regex: props[propKey], $options: 'i' };
+                break;
         }
     });
 
     return [
         filterObject,
         skipCount,
-        sort
+        sort,
+        +perPage
     ];
 };
 
