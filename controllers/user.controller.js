@@ -1,11 +1,13 @@
-const { dbTablesEnum } = require('../constants');
-const { statusCodesEnum } = require('../constants');
+const { dbTablesEnum, statusCodesEnum, notificationTypesEnum } = require('../constants');
 const { documentUtil } = require('../utils');
 const { User } = require('../database');
+const { notificationService } = require('../services');
 
 const { SUCCESS, NO_CONTENT } = statusCodesEnum;
-const { normalizeDocument } = documentUtil;
 const { followers, followsFor } = dbTablesEnum;
+const { NEW_FOLLOWER } = notificationTypesEnum;
+const { normalizeDocument } = documentUtil;
+const { notifyUser } = notificationService;
 
 module.exports = {
     getMe: (req, res, next) => {
@@ -35,12 +37,17 @@ module.exports = {
                 }
             });
 
-            await User.findByIdAndUpdate(_id, {
+            const { username } = await User.findByIdAndUpdate(_id, {
                 $push: {
                     followsFor: {
                         $each: [user]
                     }
                 }
+            }, { new: true });
+
+            await notifyUser(user, {
+                title: `You have new follower - ${username}`,
+                type: NEW_FOLLOWER
             });
 
             res

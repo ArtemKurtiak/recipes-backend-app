@@ -4,7 +4,7 @@ const { statusCodesEnum: { NOT_AUTHORIZED }, dbTablesEnum } = require('../consta
 const { jwtService } = require('../services');
 
 const {
-    user, password, createdAt, updatedAt, id
+    user, password, createdAt, updatedAt, id, notifications
 } = dbTablesEnum;
 
 module.exports = {
@@ -22,7 +22,11 @@ module.exports = {
 
             const auth = await Auth
                 .findOne({ token })
-                .populate({ path: user, select: `-${password} -${createdAt} -${updatedAt} -${id}` });
+                .populate({
+                    path: user,
+                    select: `-${password} -${createdAt} -${updatedAt} -${id}`,
+                    populate: notifications
+                });
 
             req.auth = auth;
 

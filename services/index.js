@@ -1,5 +1,6 @@
 module.exports = {
     jwtService: require('./jwt.service'),
     passwordService: require('./password.service'),
-    emailService: require('./email.service')
+    emailService: require('./email.service'),
+    notificationService: require('./notification.service')
 };
