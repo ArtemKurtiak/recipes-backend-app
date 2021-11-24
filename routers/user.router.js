@@ -14,7 +14,7 @@ const {
 } = userMiddlewares;
 const { validateBySchema } = validationMiddlewares;
 const {
-    getMe, followUser, unfollowUser, getUserFollowers, getUserFollowsFor
+    getMe, followUser, unfollowUser, getUserFollowers, getUserFollowsFor, checkIn, checkOut
 } = userControllers;
 const { correctUserIdValidator, followersValidator } = userValidators;
 
@@ -44,5 +44,9 @@ router.get('/followers',
 router.get('/follows_for',
     validateBySchema('query', followersValidator),
     getUserFollowsFor);
+
+router.post('/checkin', checkIn);
+
+router.post('/checkout', checkOut);
 
 module.exports = router;

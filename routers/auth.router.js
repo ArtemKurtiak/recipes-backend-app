@@ -1,15 +1,14 @@
 const router = require('express').Router();
 
 const { authControllers } = require('../controllers');
-const { validationMiddlewares } = require('../middlewares');
-const { userMiddlewares } = require('../middlewares');
+const { validationMiddlewares, userMiddlewares, authMiddlewares } = require('../middlewares');
 const { authValidators } = require('../validators');
 
-const { register, login } = authControllers;
+const { register, login, logout } = authControllers;
 const { validateBySchema } = validationMiddlewares;
 const { registerValidator, loginValidator } = authValidators;
 const { checkUserExistsByParam, checkUserNotExists, checkUserExists } = userMiddlewares;
-
+const { checkAuthToken } = authMiddlewares;
 
 router.post('/sign_up',
     validateBySchema('body', registerValidator),
@@ -22,5 +21,9 @@ router.post('/login',
     checkUserExistsByParam('email', 'body'),
     checkUserExists,
     login);
+
+router.post('/logout',
+    checkAuthToken,
+    logout);
 
 module.exports = router;

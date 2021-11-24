@@ -133,5 +133,33 @@ module.exports = {
         } catch (e) {
             next(e);
         }
+    },
+
+    checkIn: async (req, res, next) => {
+        try {
+            const { _id: userId } = req.auth.user;
+
+            await User.findByIdAndUpdate(userId, { active: true });
+
+            res
+                .status(NO_CONTENT)
+                .json();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkOut: async (req, res, next) => {
+        try {
+            const { _id: userId } = req.auth.user;
+
+            await User.findByIdAndUpdate(userId, { active: false });
+
+            res
+                .status(NO_CONTENT)
+                .json();
+        } catch (e) {
+            next(e);
+        }
     }
 };

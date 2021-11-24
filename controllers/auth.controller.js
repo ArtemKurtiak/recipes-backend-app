@@ -1,5 +1,5 @@
 const { Auth, User, Cart } = require('../database');
-const { statusCodesEnum: { CREATED }, emailsEnum } = require('../constants');
+const { statusCodesEnum: { CREATED, NO_CONTENT }, emailsEnum } = require('../constants');
 const { jwtService, passwordService, emailService } = require('../services');
 
 module.exports = {
@@ -57,6 +57,20 @@ module.exports = {
                     token,
                     user
                 });
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    logout: async (req, res, next) => {
+        try {
+            const { token } = req.auth;
+
+            await Auth.findOneAndDelete({ token });
+
+            res
+                .status(NO_CONTENT)
+                .json();
         } catch (e) {
             next(e);
         }

@@ -25,6 +25,10 @@ const UserSchema = new Schema({
     followers: [{ type: Schema.Types.ObjectId, ref: user }],
     followsFor: [{ type: Schema.Types.ObjectId, ref: user }],
     notifications: [{ type: Schema.Types.ObjectId, ref: notification }],
+    active: {
+        type: Boolean,
+        default: true
+    }
 }, { timestamps: true, toJSON: { virtuals: true } });
 
 UserSchema.virtual(followersCount).get(function() {
