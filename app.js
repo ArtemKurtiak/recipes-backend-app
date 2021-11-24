@@ -7,7 +7,14 @@ const http = require('http');
 require('dotenv').config();
 
 const {
-    authRouter, recipesRouter, recipesCommentsRouter, recipeRatingRouter, cartRouter, userRouter, subscriptionRouter
+    authRouter,
+    recipesRouter,
+    recipesCommentsRouter,
+    recipeRatingRouter,
+    cartRouter,
+    userRouter,
+    subscriptionRouter,
+    notificationRouter
 } = require('./routers');
 const cronJobRun = require('./cron-jobs');
 const { joinSocketHandler, messageSocketHandler } = require('./sockets');
@@ -35,6 +42,8 @@ app.use('/api/cart', cartRouter);
 app.use('/api/user', userRouter);
 
 app.use('/api/subscribe', subscriptionRouter);
+
+app.use('/api/notifications', notificationRouter);
 
 app.use(errorHandler);
 
