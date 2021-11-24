@@ -6,6 +6,5 @@ module.exports = {
     recipesCommentsMiddlewares: require('./recipesComments.middleware'),
     recipeRatingMiddlewares: require('./recipeRating.middleware'),
     validationMiddlewares: require('./validation.middleware'),
-    subscribeMiddlewares: require('./subscriber.middleware'),
-    notificationMiddlewares: require('./notification.middleware')
+    subscribeMiddlewares: require('./subscriber.middleware')
 };

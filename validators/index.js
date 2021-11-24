@@ -6,6 +6,5 @@ module.exports = {
     recipesCommentsValidators: require('./schemas/recipeComments.schema'),
     recipeRatingValidators: require('./schemas/recipeRating.schema'),
     userValidators: require('./schemas/user.schema'),
-    subscriptionValidators: require('./schemas/subscription.schema'),
-    notificationValidators: require('./schemas/notification.schema')
+    subscriptionValidators: require('./schemas/subscription.schema')
 };
