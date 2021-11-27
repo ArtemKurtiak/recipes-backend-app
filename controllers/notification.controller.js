@@ -5,6 +5,7 @@ const {
     },
     dbTablesEnum
 } = require('../constants');
+const { notificationQueryBuilder } = require('../helpers');
 
 const { notifications } = dbTablesEnum;
 
@@ -25,9 +26,17 @@ module.exports = {
 
     getNotifications: async (req, res, next) => {
         try {
-            const { user_id } = req.params;
+            const { _id } = req.auth.user;
 
-            const { notifications: userNotifications } = await User.findById(user_id).populate(notifications);
+            const [
+                skipCount,
+                filterObject
+            ] = notificationQueryBuilder(req.query);
+
+            const { notifications: userNotifications } = await User
+                .findOne({ _id })
+                .skip(skipCount)
+                .populate({ path: notifications, match: { ...filterObject } });
 
             res
                 .status(SUCCESS)

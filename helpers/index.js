@@ -1,5 +1,4 @@
-const recipesQueryBuilder = require('./query-builders/recipes.query-builder');
-
 module.exports = {
-    recipesQueryBuilder
+    recipesQueryBuilder: require('./query-builders/recipes.query-builder'),
+    notificationQueryBuilder: require('./query-builders/notification.query-builder')
 };
