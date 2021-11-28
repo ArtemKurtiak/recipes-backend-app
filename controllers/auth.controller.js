@@ -1,6 +1,13 @@
-const { Auth, User, Cart } = require('../database');
-const { statusCodesEnum: { CREATED, NO_CONTENT }, emailsEnum } = require('../constants');
-const { jwtService, passwordService, emailService } = require('../services');
+const {
+    Auth, User, Cart, ActionToken
+} = require('../database');
+const {
+    statusCodesEnum: { CREATED, NO_CONTENT }, emailsEnum, FRONT_END_URL, dbTablesEnum
+} = require('../constants');
+const {
+    jwtService, passwordService, emailService
+} = require('../services');
+const { SUCCESS } = require('../constants/statusCodes.enum');
 
 module.exports = {
     register: async (req, res, next) => {
@@ -71,6 +78,51 @@ module.exports = {
             res
                 .status(NO_CONTENT)
                 .json();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    forgetPassword: async (req, res, next) => {
+        try {
+            const { email } = req.body;
+            const { user: { _id: user } } = req;
+
+            const token = await jwtService.generateActionToken();
+
+            await ActionToken.create({
+                token,
+                user
+            });
+
+            await emailService.sendEmail(email, emailsEnum.forgetPassword, {
+                link: `${FRONT_END_URL}/auth/forget-password?actionToken=${token}`
+            });
+
+            res
+                .status(NO_CONTENT)
+                .json();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    resetPassword: async (req, res, next) => {
+        try {
+            const { user, token } = req.auth;
+            const { password } = req.body;
+
+            const hashedPassword = await passwordService.hashPassword(password);
+
+            await User.findByIdAndUpdate(user._id, { password: hashedPassword });
+
+            await Auth.deleteMany({ user: user._id });
+
+            await ActionToken.deleteOne({ token });
+
+            res
+                .status(SUCCESS)
+                .json({ updated: true });
         } catch (e) {
             next(e);
         }
