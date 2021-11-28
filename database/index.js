@@ -1,4 +1,5 @@
 module.exports = {
+    ActionToken: require('./schemas/ActionToken.schema'),
     Auth: require('./schemas/Auth.schema'),
     User: require('./schemas/User.schema'),
     Recipe: require('./schemas/Recipe.schema'),
@@ -7,5 +8,6 @@ module.exports = {
     RecipeRating: require('./schemas/RecipeRating.schema'),
     Cart: require('./schemas/Cart.schema'),
     NewsSubscriber: require('./schemas/NewsSubscriber.schema'),
-    Notification: require('./schemas/Notification.schema')
+    Notification: require('./schemas/Notification.schema'),
+    Product: require('./schemas/Product.schema')
 };

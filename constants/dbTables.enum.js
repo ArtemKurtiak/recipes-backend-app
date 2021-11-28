@@ -18,5 +18,8 @@ module.exports = {
     likes_count: 'likes_count',
     likes: 'likes',
     notification: 'notification',
-    notifications: 'notifications'
+    notifications: 'notifications',
+    product: 'product',
+    forgetPasswordCode: 'forget_password_code',
+    actionToken: 'action_token'
 };

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const { regExpEnum: { EMAIL_REGEXP, PASSWORD_REGEXP } } = require('../../constants');
+const { regExpEnum: { EMAIL_REGEXP, PASSWORD_REGEXP }, regExpEnum } = require('../../constants');
 
 
 const registerValidator = Joi.object({
@@ -32,8 +32,24 @@ const loginValidator = Joi.object({
         .required()
 });
 
+const forgetPasswordValidator = Joi.object({
+    email: Joi
+        .string()
+        .trim()
+        .required()
+});
+
+const resetPasswordValidator = Joi.object({
+    password: Joi
+        .string()
+        .regex(PASSWORD_REGEXP)
+        .trim()
+        .required()
+});
 
 module.exports = {
     registerValidator,
-    loginValidator
+    loginValidator,
+    forgetPasswordValidator,
+    resetPasswordValidator
 };

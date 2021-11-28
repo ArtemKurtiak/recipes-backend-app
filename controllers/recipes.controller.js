@@ -1,5 +1,5 @@
 const { documentUtil } = require('../utils');
-const { Recipe } = require('../database');
+const { Recipe, Product } = require('../database');
 const { statusCodesEnum: { SUCCESS, CREATED, NO_CONTENT }, dbTablesEnum } = require('../constants');
 const { recipesQueryBuilder } = require('../helpers');
 
@@ -39,6 +39,12 @@ module.exports = {
                 ...req.body,
                 user: _id
             });
+
+            if (recipe.products) {
+                recipe.products.forEach(async (item) => {
+                    await Product.create({ ...item });
+                });
+            }
 
             const normalizedRecipe = normalizeDocument(recipe);
 

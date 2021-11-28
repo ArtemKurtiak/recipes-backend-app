@@ -1,3 +1,4 @@
 module.exports = {
-    successRegistration: 'successRegistration'
+    successRegistration: 'successRegistration',
+    forgetPassword: 'forgetPassword'
 };

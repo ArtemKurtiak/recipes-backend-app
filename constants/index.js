@@ -1,8 +1,11 @@
 module.exports = {
     PORT: process.env.PORT,
+    FRONT_END_URL: process.env.FRONT_END_URL,
     MONGODB_URI: process.env.MONGODB_URI,
-    JWT_SECRET: process.env.JWT_SECRET,
-    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+    JWT_SECRET_AUTH: process.env.JWT_SECRET_AUTH,
+    JWT_SECRET_ACTION: process.env.JWT_SECRET_ACTION,
+    JWT_AUTH_EXPIRES_IN: process.env.JWT_AUTH_EXPIRES_IN,
+    JWT_ACTION_EXPIRES_IN: process.env.JWT_ACTION_EXPIRES_IN,
     APP_EMAIL: process.env.APP_EMAIL,
     APP_EMAIL_PASSWORD: process.env.APP_EMAIL_PASSWORD,
     EMAIL_SERVICE: process.env.EMAIL_SERVICE,
@@ -13,5 +16,6 @@ module.exports = {
     emailsEnum: require('./emails.enum'),
     recipeSchemaFieldsEnum: require('./recipeSchemaFields.enum'),
     socketEventsEnum: require('./socketEvents.enum'),
-    notificationTypesEnum: require('./notificationTypes.enum')
+    notificationTypesEnum: require('./notificationTypes.enum'),
+    tokensTypesEnum: require('./tokensTypes.enum')
 };

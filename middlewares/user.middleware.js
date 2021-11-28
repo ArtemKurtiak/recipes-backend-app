@@ -1,8 +1,6 @@
 const { User } = require('../database');
 const CustomError = require('../errors/CustomError');
-const { statusCodesEnum: { CONFLICT, NOT_FOUND }, dbTablesEnum } = require('../constants');
-
-const { notifications } = dbTablesEnum;
+const { statusCodesEnum: { CONFLICT, NOT_FOUND } } = require('../constants');
 
 module.exports = {
     checkUserExistsByParam: (paramName, objectToFind = 'body', dbName = paramName) => async (req, res, next) => {
