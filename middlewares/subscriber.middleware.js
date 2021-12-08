@@ -1,13 +1,13 @@
 const CustomError = require('../errors/CustomError');
 const { statusCodesEnum: { BAD_REQUEST } } = require('../constants');
-const { Subscriber } = require('../database');
+const { NewsSubscriber } = require('../database');
 
 module.exports = {
     checkUserAlreadySubscribed: async (req, res, next) => {
         try {
             const { email } = req.body;
 
-            const subscriber = await Subscriber.findOne({ email });
+            const subscriber = await NewsSubscriber.findOne({ email });
 
             if (subscriber) {
                 throw new CustomError('You have already been subscribed', BAD_REQUEST);
