@@ -1,8 +1,9 @@
+const http = require('http');
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
-const http = require('http');
+const fileUpload = require('express-fileupload');
 
 require('dotenv').config();
 
@@ -28,6 +29,8 @@ mongoose.connect(MONGODB_URI);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(fileUpload());
 
 app.use('/api/auth', authRouter);
 

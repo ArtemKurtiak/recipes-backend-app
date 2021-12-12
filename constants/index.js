@@ -9,6 +9,10 @@ module.exports = {
     APP_EMAIL: process.env.APP_EMAIL,
     APP_EMAIL_PASSWORD: process.env.APP_EMAIL_PASSWORD,
     EMAIL_SERVICE: process.env.EMAIL_SERVICE,
+    S3_REGION: process.env.S3_REGION,
+    S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
+    S3_SECRET_KEY: process.env.S3_SECRET_KEY,
+    S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
     regExpEnum: require('./regex.enum'),
     statusCodesEnum: require('./statusCodes.enum'),
     dbTablesEnum: require('./dbTables.enum'),
@@ -17,5 +21,6 @@ module.exports = {
     recipeSchemaFieldsEnum: require('./recipeSchemaFields.enum'),
     socketEventsEnum: require('./socketEvents.enum'),
     notificationTypesEnum: require('./notificationTypes.enum'),
-    tokensTypesEnum: require('./tokensTypes.enum')
+    tokensTypesEnum: require('./tokensTypes.enum'),
+    photoTypesEnum: require('./photoTypes.enum')
 };

@@ -21,10 +21,6 @@ const createRecipeValidator = Joi.object({
         .string()
         .valid(...Object.values(recipesCategoriesEnum))
         .required(),
-    image: Joi
-        .string()
-        .trim()
-        .required(),
     time: Joi
         .number()
         .required()
@@ -98,5 +94,5 @@ module.exports = {
     createRecipeValidator,
     updateRecipeValidator,
     correctQueryValidator,
-    reactionsForRecipeValidator
+    reactionsForRecipeValidator,
 };

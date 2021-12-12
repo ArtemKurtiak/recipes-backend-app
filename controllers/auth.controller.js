@@ -8,6 +8,7 @@ const {
     jwtService, passwordService, emailService
 } = require('../services');
 const { SUCCESS } = require('../constants/statusCodes.enum');
+const { normalizeDocument } = require('../utils/document.util');
 
 module.exports = {
     register: async (req, res, next) => {
@@ -34,10 +35,13 @@ module.exports = {
 
             await emailService.sendEmail(email, emailsEnum.successRegistration);
 
+            const normalizedUser = normalizeDocument(user);
+
             res
                 .status(CREATED)
                 .json({
-                    token
+                    token,
+                    user: normalizedUser
                 });
         } catch (e) {
             next(e);
@@ -58,11 +62,13 @@ module.exports = {
                 token
             });
 
+            const normalizedUser = normalizeDocument(user);
+
             res
                 .status(200)
                 .json({
                     token,
-                    user
+                    user: normalizedUser
                 });
         } catch (e) {
             next(e);

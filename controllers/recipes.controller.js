@@ -1,7 +1,13 @@
 const { documentUtil } = require('../utils');
 const { Recipe, Product } = require('../database');
-const { statusCodesEnum: { SUCCESS, CREATED, NO_CONTENT }, dbTablesEnum } = require('../constants');
+const {
+    statusCodesEnum: {
+        SUCCESS, CREATED, NO_CONTENT, BAD_REQUEST
+    }, dbTablesEnum, photoTypesEnum
+} = require('../constants');
 const { recipesQueryBuilder } = require('../helpers');
+const { s3Service } = require('../services');
+const CustomError = require('../errors/CustomError');
 
 const { normalizeDocument } = documentUtil;
 const { likes } = dbTablesEnum;
@@ -35,22 +41,33 @@ module.exports = {
         try {
             const { _id } = req.auth.user;
 
-            const recipe = await Recipe.create({
-                ...req.body,
-                user: _id
-            });
+            if (req.files && req.files.image) {
+                const { image } = req.files;
 
-            if (recipe.products) {
-                recipe.products.forEach(async (item) => {
-                    await Product.create({ ...item });
+                const path = await s3Service.uploadFile(image, photoTypesEnum.RECIPE);
+
+                const recipe = await Recipe.create({
+                    ...req.body,
+                    user: _id,
+                    image: path
                 });
+
+                if (recipe.products) {
+                    recipe.products.forEach(async (item) => {
+                        await Product.create({ ...item });
+                    });
+                }
+
+                const normalizedRecipe = normalizeDocument(recipe);
+
+                res
+                    .status(CREATED)
+                    .json(normalizedRecipe);
+
+                return;
             }
 
-            const normalizedRecipe = normalizeDocument(recipe);
-
-            res
-                .status(CREATED)
-                .json(normalizedRecipe);
+            throw new CustomError('Image not found', BAD_REQUEST);
         } catch (e) {
             next(e);
         }
