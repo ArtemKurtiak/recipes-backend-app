@@ -1,6 +1,6 @@
 const { User } = require('../database');
 const CustomError = require('../errors/CustomError');
-const { statusCodesEnum: { CONFLICT, NOT_FOUND } } = require('../constants');
+const { statusCodesEnum: { CONFLICT, NOT_FOUND, FORBIDDEN } } = require('../constants');
 
 module.exports = {
     checkUserExistsByParam: (paramName, objectToFind = 'body', dbName = paramName) => async (req, res, next) => {
@@ -82,6 +82,21 @@ module.exports = {
 
             if (!user.followsFor.includes(userToFollow)) {
                 throw new CustomError('You don`t follow this user.', CONFLICT);
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    checkUserPermissionByParam: (paramName, objectToFind = 'body') => (req, res, next) => {
+        try {
+            const paramValue = objectToFind[paramName];
+            const { _id: userId } = req.auth.user;
+
+            if (paramValue !== userId) {
+                throw new CustomError('Forbidden', FORBIDDEN);
             }
 
             next();

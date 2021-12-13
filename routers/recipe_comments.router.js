@@ -2,13 +2,14 @@ const router = require('express').Router();
 
 const { recipesCommentsControllers } = require('../controllers');
 const {
-    recipesMiddlewares, validationMiddlewares, authMiddlewares, recipesCommentsMiddlewares
+    recipesMiddlewares, validationMiddlewares, authMiddlewares, recipesCommentsMiddlewares, userMiddlewares
 } = require('../middlewares');
 const { recipesCommentsValidators } = require('../validators');
 
 const { checkAuthToken } = authMiddlewares;
 const { createRecipeComment, updateRecipeComment, deleteRecipeComment } = recipesCommentsControllers;
 const { checkRecipeExistsByParam, checkRecipeExists } = recipesMiddlewares;
+const { checkUserPermissionByParam } = userMiddlewares;
 const {
     checkRecipeCommentExistsByParam,
     checkRecipeCommentExists,
@@ -31,6 +32,7 @@ router.patch('/:recipe_comment_id',
     checkRecipeCommentExistsByParam('recipe_comment_id', 'params', '_id'),
     checkRecipeCommentExists,
     checkRecipeCommentUserPermission,
+    checkUserPermissionByParam('recipe_comment_id', 'params'),
     updateRecipeComment);
 
 router.delete('/:recipe_comment_id',
@@ -38,6 +40,7 @@ router.delete('/:recipe_comment_id',
     checkRecipeCommentExistsByParam('recipe_comment_id', 'params', '_id'),
     checkRecipeCommentExists,
     checkRecipeCommentUserPermission,
+    checkUserPermissionByParam('recipe_comment_id', 'params'),
     deleteRecipeComment);
 
 module.exports = router;

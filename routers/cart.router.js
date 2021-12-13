@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { cartControllers } = require('../controllers');
 const {
-    recipesMiddlewares, validationMiddlewares, authMiddlewares, cartMiddlewares
+    recipesMiddlewares, validationMiddlewares, authMiddlewares, cartMiddlewares, userMiddlewares
 } = require('../middlewares');
 const { cartValidators } = require('../validators');
 
@@ -11,6 +11,7 @@ const { checkRecipeAlreadyInCart, checkRecipeExistsInCart } = cartMiddlewares;
 const { validateBySchema } = validationMiddlewares;
 const { checkRecipeExistsByParam, checkRecipeExists } = recipesMiddlewares;
 const { checkAuthToken } = authMiddlewares;
+const { checkUserPermissionByParam } = userMiddlewares;
 const { addRecipeToCart, removeRecipeFromCart, getUserCart } = cartControllers;
 
 router.use(checkAuthToken);
@@ -27,6 +28,7 @@ router.post('/remove',
     checkRecipeExistsByParam('recipe_id', 'body', '_id'),
     checkRecipeExists,
     checkRecipeExistsInCart,
+    checkUserPermissionByParam('recipe_id'),
     removeRecipeFromCart);
 
 router.get('/',

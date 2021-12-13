@@ -1,12 +1,13 @@
 const router = require('express').Router();
 
 const {
-    authMiddlewares, validationMiddlewares, recipesMiddlewares
+    authMiddlewares, validationMiddlewares, recipesMiddlewares, userMiddlewares
 } = require('../middlewares');
 const { recipesControllers } = require('../controllers');
 const { recipesValidators } = require('../validators');
 
 const { checkAuthToken } = authMiddlewares;
+const { checkUserPermissionByParam } = userMiddlewares;
 const {
     getRecipes, createRecipe, updateRecipe, deleteRecipe, likeRecipe, viewRecipe, getRecipeLikes
 } = recipesControllers;
@@ -31,12 +32,14 @@ router.patch('/:recipe_id',
     validateBySchema('params', correctIdValidator),
     checkRecipeExistsByParam('recipe_id', 'params', '_id'),
     checkRecipeExists,
+    checkUserPermissionByParam('recipe_id', 'params'),
     updateRecipe);
 
 router.delete('/:recipe_id',
     validateBySchema('params', correctIdValidator),
     checkRecipeExistsByParam('recipe_id', 'params', '_id'),
     checkRecipeExists,
+    checkUserPermissionByParam('recipe_id', 'params'),
     deleteRecipe);
 
 router.post('/like',
