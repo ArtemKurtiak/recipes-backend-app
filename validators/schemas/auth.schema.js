@@ -18,7 +18,9 @@ const registerValidator = Joi.object({
     username: Joi
         .string()
         .trim()
-        .required()
+        .required(),
+    image: Joi
+        .any()
 });
 
 const loginValidator = Joi.object({

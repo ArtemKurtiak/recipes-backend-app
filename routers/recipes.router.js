@@ -4,7 +4,7 @@ const {
     authMiddlewares, validationMiddlewares, recipesMiddlewares, userMiddlewares
 } = require('../middlewares');
 const { recipesControllers } = require('../controllers');
-const { recipesValidators } = require('../validators');
+const { recipesValidators, correctQueryValidator } = require('../validators');
 
 const { checkAuthToken } = authMiddlewares;
 const { checkUserPermissionByParam } = userMiddlewares;
@@ -13,7 +13,7 @@ const {
 } = recipesControllers;
 const { validateBySchema } = validationMiddlewares;
 const {
-    createRecipeValidator, updateRecipeValidator, correctIdValidator, correctQueryValidator, reactionsForRecipeValidator
+    createRecipeValidator, updateRecipeValidator, correctIdValidator, reactionsForRecipeValidator
 } = recipesValidators;
 const { checkRecipeExistsByParam, checkRecipeExists, checkRecipeAlreadyLiked } = recipesMiddlewares;
 

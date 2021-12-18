@@ -25,7 +25,10 @@ const app = express();
 
 app.use(cors({ origin: '*' }));
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

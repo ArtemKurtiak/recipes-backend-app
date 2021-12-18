@@ -48,30 +48,6 @@ const updateRecipeValidator = Joi.object({
         .required()
 });
 
-const correctQueryValidator = Joi.object({
-    recipe_category: Joi
-        .string()
-        .trim()
-        .valid(...Object.values(recipesCategoriesEnum)),
-    user: Joi
-        .string()
-        .trim()
-        .min(24)
-        .max(24),
-    sortBy: Joi
-        .string()
-        .trim(),
-    order: Joi
-        .string(),
-    page: Joi
-        .number(),
-    perPage: Joi
-        .number(),
-    name: Joi
-        .string()
-        .trim()
-});
-
 const correctIdValidator = Joi.object({
     recipe_id: Joi
         .string()
@@ -93,6 +69,5 @@ module.exports = {
     correctIdValidator,
     createRecipeValidator,
     updateRecipeValidator,
-    correctQueryValidator,
     reactionsForRecipeValidator,
 };

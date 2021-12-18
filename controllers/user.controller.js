@@ -1,7 +1,9 @@
+const mongoose = require('mongoose');
 const { dbTablesEnum, statusCodesEnum, notificationTypesEnum } = require('../constants');
 const { documentUtil } = require('../utils');
-const { User } = require('../database');
+const { User, Recipe } = require('../database');
 const { notificationService } = require('../services');
+const { likesQueryBuilder } = require('../helpers');
 
 const { SUCCESS, NO_CONTENT } = statusCodesEnum;
 const { followers, followsFor } = dbTablesEnum;
@@ -158,6 +160,32 @@ module.exports = {
             res
                 .status(NO_CONTENT)
                 .json();
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    getUserLikes: async (req, res, next) => {
+        try {
+            const { _id: userId } = req.auth.user;
+
+            const [
+                filterObject,
+                skipCount,
+                limit
+            ] = likesQueryBuilder(req.query);
+
+            const recipes = await Recipe
+                .find({
+                    likes: userId,
+                    ...filterObject
+                })
+                .skip(skipCount)
+                .limit(limit);
+
+            res
+                .status(SUCCESS)
+                .json(recipes);
         } catch (e) {
             next(e);
         }

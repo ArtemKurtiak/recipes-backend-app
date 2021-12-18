@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const { dbTablesEnum, recipesCategoriesEnum, recipeSchemaFieldsEnum } = require('../../constants');
+const { password } = require('../../constants/dbTables.enum');
 
 const {
     recipe, user, recipe_comment, recipe_rating, version, recipe_id, likes_count
@@ -51,21 +52,21 @@ const RecipeSchema = new Schema({
 }, { timestamps: true, toJSON: { virtuals: true } });
 
 function populateSchema() {
-    this.populate({
-        path: comments,
-        select: `-${recipe_id} -${version}`,
-        populate: {
-            path: user,
-            select: `-${version}`
-        }
-    });
+//    this.populate({
+//        path: comments,
+//        select: `-${recipe_id} -${version}`,
+//        populate: {
+//            path: user,
+//            select: `-${version}`
+//        }
+//    });
     this.populate({
         path: ratings,
         select: `-${recipe_id} -${version} -${user}`
     });
     this.populate({
         path: user,
-        select: `-${version}`
+        select: `-${version} -${password}`
     });
 }
 

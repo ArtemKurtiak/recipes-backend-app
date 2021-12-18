@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { authMiddlewares, userMiddlewares, validationMiddlewares } = require('../middlewares');
 const { userControllers } = require('../controllers');
-const { userValidators } = require('../validators');
+const { userValidators, correctQueryValidator } = require('../validators');
 
 const { checkAuthToken } = authMiddlewares;
 const {
@@ -14,7 +14,7 @@ const {
 } = userMiddlewares;
 const { validateBySchema } = validationMiddlewares;
 const {
-    getMe, followUser, unfollowUser, getUserFollowers, getUserFollowsFor, checkIn, checkOut
+    getMe, followUser, unfollowUser, getUserFollowers, getUserFollowsFor, checkIn, checkOut, getUserLikes
 } = userControllers;
 const { correctUserIdValidator, followersValidator } = userValidators;
 
@@ -48,5 +48,9 @@ router.get('/follows_for',
 router.post('/checkin', checkIn);
 
 router.post('/checkout', checkOut);
+
+router.get('/likes',
+    validateBySchema('query', correctQueryValidator),
+    getUserLikes);
 
 module.exports = router;
