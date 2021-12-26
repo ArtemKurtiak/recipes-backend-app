@@ -11,4 +11,4 @@ EXPOSE 5000
 
 VOLUME [ "/app/data" ]
 
-CMD [ "node", "app.js" ]
+CMD [ "npm", "start" ]

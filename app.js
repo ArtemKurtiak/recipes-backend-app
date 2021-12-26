@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/ping', (req, res) => {
-    res.send('Pong!!!!!!!!!!!!!');
+    res.send('Pong!');
 });
 
 app.use(fileUpload());
