@@ -19,11 +19,10 @@ const createRecipeValidator = Joi.object({
         .items(createProductValidator),
     recipe_category: Joi
         .string()
-        .valid(...Object.values(recipesCategoriesEnum))
         .required(),
     time: Joi
         .number()
-        .required()
+        .required(),
 });
 
 const updateRecipeValidator = Joi.object({

@@ -34,7 +34,6 @@ const RecipeSchema = new Schema({
     recipe_category: {
         type: String,
         required: true,
-        enum: Object.values(recipesCategoriesEnum)
     },
     likes: [{ type: Schema.Types.ObjectId, ref: user }],
     views: {
