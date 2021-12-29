@@ -8,6 +8,7 @@ const {
 const { recipesQueryBuilder } = require('../helpers');
 const { s3Service } = require('../services');
 const CustomError = require('../errors/CustomError');
+const { recipe_category } = require('../constants/dbTables.enum');
 
 const { normalizeDocument } = documentUtil;
 const { likes } = dbTablesEnum;
