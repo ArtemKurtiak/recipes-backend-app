@@ -9,6 +9,6 @@ COPY . .
 
 EXPOSE 5000
 
-VOLUME [ "/app/data" ]
-
+CMD [ "npm", "uninstall", "bcrypt" ]
+CMD [ "npm", "install", "bcrypt" ]
 CMD [ "npm", "start" ]
