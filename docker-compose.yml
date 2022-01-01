@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     container_name: recipes_backend
-    restart: always
+    restart: unless-stopped
     build: .
     ports:
       - '5000:5000'
@@ -18,7 +18,7 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - data:/app/data
+      - /data:/app/data
 
 volumes:
   data:
