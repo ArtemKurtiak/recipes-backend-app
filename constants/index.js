@@ -1,3 +1,5 @@
+const { csvFileNamesEnum } = require('./csvFileNames.enum');
+
 module.exports = {
     PORT: process.env.PORT,
     FRONT_END_URL: process.env.FRONT_END_URL,
@@ -13,6 +15,8 @@ module.exports = {
     S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
     S3_SECRET_KEY: process.env.S3_SECRET_KEY,
     S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
+    CSV_DOWNLOADS_URL: process.env.CSV_DOWNLOADS_URL,
+    csvFileNamesEnum: require('./csvFileNames.enum'),
     regExpEnum: require('./regex.enum'),
     statusCodesEnum: require('./statusCodes.enum'),
     dbTablesEnum: require('./dbTables.enum'),
@@ -22,5 +26,5 @@ module.exports = {
     socketEventsEnum: require('./socketEvents.enum'),
     notificationTypesEnum: require('./notificationTypes.enum'),
     tokensTypesEnum: require('./tokensTypes.enum'),
-    photoTypesEnum: require('./photoTypes.enum')
+    photoTypesEnum: require('./photoTypes.enum'),
 };
