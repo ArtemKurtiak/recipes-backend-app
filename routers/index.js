@@ -7,5 +7,6 @@ module.exports = {
     recipesCategoriesRouter: require('./recipes_categories.router'),
     userRouter: require('./user.router'),
     subscriptionRouter: require('./subscription.router'),
-    notificationRouter: require('./notification.router')
+    notificationRouter: require('./notification.router'),
+    exportingRouter: require('./exporting.router')
 };

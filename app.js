@@ -16,7 +16,7 @@ const {
     userRouter,
     subscriptionRouter,
     notificationRouter,
-    recipesCategoriesRouter
+    recipesCategoriesRouter, exportingRouter
 } = require('./routers');
 const cronJobRun = require('./cron-jobs');
 const { joinSocketHandler, messageSocketHandler } = require('./sockets');
@@ -57,6 +57,8 @@ app.use('/api/subscribe', subscriptionRouter);
 app.use('/api/notifications', notificationRouter);
 
 app.use('/api/recipes_categories', recipesCategoriesRouter);
+
+app.use('/api/exporting', exportingRouter);
 
 app.use(errorHandler);
 

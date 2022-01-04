@@ -7,5 +7,6 @@ module.exports = {
     recipesCategoriesControllers: require('./recipes_categories.controller'),
     userControllers: require('./user.controller'),
     subscriptionControllers: require('./subscription.controller'),
-    notificationControllers: require('./notification.controller')
+    notificationControllers: require('./notification.controller'),
+    exportingControllers: require('./exporting.contrtoller')
 };
