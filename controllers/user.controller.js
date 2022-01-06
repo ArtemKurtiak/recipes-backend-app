@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const { dbTablesEnum, statusCodesEnum, notificationTypesEnum } = require('../constants');
+const {
+    dbTablesEnum, statusCodesEnum, notificationTypesEnum, NEAR_USER_RADIUS_KM, RADIAN_IN_KM
+} = require('../constants');
 const { documentUtil } = require('../utils');
 const { User, Recipe } = require('../database');
 const { notificationService } = require('../services');
@@ -186,6 +187,31 @@ module.exports = {
             res
                 .status(SUCCESS)
                 .json(recipes);
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    getNearUsers: async (req, res, next) => {
+        try {
+            const { latitude, longitude } = req.auth.user;
+
+            const users = await User.find({
+                location: {
+                    $geoWithin: {
+                        $centerSphere: [
+                            [
+                                latitude,
+                                longitude,
+                            ],
+                            // count kilometres in radians
+                            NEAR_USER_RADIUS_KM / RADIAN_IN_KM
+                        ]
+                    }
+                },
+            });
+
+            res.send(users);
         } catch (e) {
             next(e);
         }

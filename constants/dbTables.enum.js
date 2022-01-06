@@ -21,5 +21,6 @@ module.exports = {
     notifications: 'notifications',
     product: 'product',
     forgetPasswordCode: 'forget_password_code',
-    actionToken: 'action_token'
+    actionToken: 'action_token',
+    location: 'location'
 };

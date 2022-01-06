@@ -13,13 +13,19 @@ const { normalizeDocument } = require('../utils/document.util');
 module.exports = {
     register: async (req, res, next) => {
         try {
-            const { password, email } = req.body;
+            const {
+                password, email, latitude, longitude
+            } = req.body;
 
             const hashedPassword = await passwordService.hashPassword(password);
 
             const user = await User.create({
                 ...req.body,
-                password: hashedPassword
+                password: hashedPassword,
+                location: [
+                    latitude,
+                    longitude
+                ]
             });
 
             const token = await jwtService.generateToken();

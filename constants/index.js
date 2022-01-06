@@ -16,6 +16,8 @@ module.exports = {
     S3_SECRET_KEY: process.env.S3_SECRET_KEY,
     S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
     CSV_DOWNLOADS_URL: process.env.CSV_DOWNLOADS_URL,
+    NEAR_USER_RADIUS_KM: process.env.NEAR_USER_RADIUS_KM,
+    RADIAN_IN_KM: 6378.1,
     csvFileNamesEnum: require('./csvFileNames.enum'),
     regExpEnum: require('./regex.enum'),
     statusCodesEnum: require('./statusCodes.enum'),

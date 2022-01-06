@@ -20,7 +20,13 @@ const registerValidator = Joi.object({
         .trim()
         .required(),
     image: Joi
-        .any()
+        .any(),
+    latitude: Joi
+        .number()
+        .required(),
+    longitude: Joi
+        .number()
+        .required()
 });
 
 const loginValidator = Joi.object({

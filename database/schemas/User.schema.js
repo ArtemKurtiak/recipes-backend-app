@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const { dbTablesEnum } = require('../../constants');
 
 const {
-    user, followersCount, followsForCount, notification
+    user, followersCount, followsForCount, notification, location
 } = dbTablesEnum;
 
 const UserSchema = new Schema({
@@ -15,6 +15,14 @@ const UserSchema = new Schema({
     email: {
         type: String,
         trim: true,
+        required: true
+    },
+    latitude: {
+        type: Number,
+        required: true,
+    },
+    longitude: {
+        type: Number,
         required: true
     },
     password: {
@@ -32,6 +40,9 @@ const UserSchema = new Schema({
     image: {
         type: String,
         required: true,
+    },
+    location: {
+        type: [Number],
     }
 }, { timestamps: true, toJSON: { virtuals: true } });
 
@@ -42,5 +53,12 @@ UserSchema.virtual(followersCount).get(function() {
 UserSchema.virtual(followsForCount).get(function() {
     return this.followsFor.length;
 });
+
+// UserSchema.virtual(location).get(function() {
+//     return [
+//         this.latitude,
+//         this.longitude
+//     ];
+// });
 
 module.exports = model(user, UserSchema);

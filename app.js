@@ -21,6 +21,7 @@ const {
 const cronJobRun = require('./cron-jobs');
 const { joinSocketHandler, messageSocketHandler } = require('./sockets');
 const { PORT, socketEventsEnum, MONGODB_URI } = require('./constants');
+const { User } = require('./database');
 
 const app = express();
 

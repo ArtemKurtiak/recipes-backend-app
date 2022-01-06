@@ -14,7 +14,7 @@ const {
 } = userMiddlewares;
 const { validateBySchema } = validationMiddlewares;
 const {
-    getMe, followUser, unfollowUser, getUserFollowers, getUserFollowsFor, checkIn, checkOut, getUserLikes
+    getMe, followUser, unfollowUser, getUserFollowers, getUserFollowsFor, checkIn, checkOut, getUserLikes, getNearUsers
 } = userControllers;
 const { correctUserIdValidator, followersValidator } = userValidators;
 
@@ -52,5 +52,7 @@ router.post('/checkout', checkOut);
 router.get('/likes',
     validateBySchema('query', correctQueryValidator),
     getUserLikes);
+
+router.get('/near_users', getNearUsers);
 
 module.exports = router;
