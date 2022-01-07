@@ -1,3 +1,4 @@
 module.exports = {
-    RECIPE: 'recipes'
+    RECIPE: 'recipes',
+    USER: 'users'
 };

@@ -2,10 +2,11 @@ const {
     Auth, User, Cart, ActionToken
 } = require('../database');
 const {
-    statusCodesEnum: { CREATED, NO_CONTENT }, emailsEnum, FRONT_END_URL, dbTablesEnum
+    statusCodesEnum: { CREATED, NO_CONTENT }, emailsEnum, FRONT_END_URL, dbTablesEnum, photoTypesEnum,
+    DEFAULT_USER_IMAGE
 } = require('../constants');
 const {
-    jwtService, passwordService, emailService
+    jwtService, passwordService, emailService, s3Service
 } = require('../services');
 const { SUCCESS } = require('../constants/statusCodes.enum');
 const { normalizeDocument } = require('../utils/document.util');
@@ -16,16 +17,26 @@ module.exports = {
             const {
                 password, email, latitude, longitude
             } = req.body;
+            let { image: userImage = DEFAULT_USER_IMAGE } = req.body;
+
+            if (req.files && req.files.image) {
+                const { image } = req.files;
+
+                const path = await s3Service.uploadFile(image, photoTypesEnum.USER);
+
+                userImage = path;
+            }
 
             const hashedPassword = await passwordService.hashPassword(password);
 
             const user = await User.create({
                 ...req.body,
                 password: hashedPassword,
+                image: userImage,
                 location: [
                     latitude,
                     longitude
-                ]
+                ],
             });
 
             const token = await jwtService.generateToken();

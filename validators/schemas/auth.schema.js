@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const { regExpEnum: { EMAIL_REGEXP, PASSWORD_REGEXP }, regExpEnum } = require('../../constants');
+const { regExpEnum: { EMAIL_REGEXP, PASSWORD_REGEXP } } = require('../../constants');
 
 
 const registerValidator = Joi.object({
@@ -20,7 +20,8 @@ const registerValidator = Joi.object({
         .trim()
         .required(),
     image: Joi
-        .any(),
+        .any()
+        .optional(),
     latitude: Joi
         .number()
         .required(),
