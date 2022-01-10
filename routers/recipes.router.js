@@ -9,7 +9,7 @@ const { recipesValidators, correctQueryValidator } = require('../validators');
 const { checkAuthToken } = authMiddlewares;
 const { checkUserPermissionByParam } = userMiddlewares;
 const {
-    getRecipes, createRecipe, updateRecipe, deleteRecipe, likeRecipe, viewRecipe, getRecipeLikes
+    getRecipes, createRecipe, updateRecipe, deleteRecipe, likeRecipe, viewRecipe, getRecipeLikes, getRecipeById
 } = recipesControllers;
 const { validateBySchema } = validationMiddlewares;
 const {
@@ -54,5 +54,11 @@ router.post('/view',
 router.get('/likes',
     validateBySchema('body', reactionsForRecipeValidator),
     getRecipeLikes);
+
+router.get('/:recipe_id',
+    validateBySchema('params', correctIdValidator),
+    checkRecipeExistsByParam('recipe_id', 'params', '_id'),
+    checkRecipeExists,
+    getRecipeById);
 
 module.exports = router;
