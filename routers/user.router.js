@@ -16,7 +16,7 @@ const { validateBySchema } = validationMiddlewares;
 const {
     getMe, followUser, unfollowUser, getUserFollowers, getUserFollowsFor, checkIn, checkOut, getUserLikes, getNearUsers
 } = userControllers;
-const { correctUserIdValidator, followersValidator } = userValidators;
+const { correctUserIdValidator, followersValidator, optionalUserIdValidator } = userValidators;
 
 router.use(checkAuthToken);
 
@@ -49,8 +49,9 @@ router.post('/checkin', checkIn);
 
 router.post('/checkout', checkOut);
 
-router.get('/likes',
+router.get('/likes/:user?',
     validateBySchema('query', correctQueryValidator),
+    validateBySchema('params', optionalUserIdValidator),
     getUserLikes);
 
 router.get('/near_users', getNearUsers);

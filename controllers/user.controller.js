@@ -168,7 +168,7 @@ module.exports = {
 
     getUserLikes: async (req, res, next) => {
         try {
-            const { _id: userId } = req.auth.user;
+            const userId = req.params.user || req.auth.user._id;
 
             const [
                 filterObject,

@@ -161,7 +161,10 @@ module.exports = {
 
             const recipe = await Recipe
                 .findById(recipe_id)
-                .populate(user)
+                .populate({
+                    path: user,
+                    select: '-password'
+                })
                 .populate(likes);
 
             res
