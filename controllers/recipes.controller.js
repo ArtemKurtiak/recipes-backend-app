@@ -3,15 +3,15 @@ const { Recipe, Product } = require('../database');
 const {
     statusCodesEnum: {
         SUCCESS, CREATED, NO_CONTENT, BAD_REQUEST
-    }, dbTablesEnum, photoTypesEnum
+    }, photoTypesEnum
 } = require('../constants');
 const { recipesQueryBuilder } = require('../helpers');
 const { s3Service } = require('../services');
 const CustomError = require('../errors/CustomError');
-const { recipe_category } = require('../constants/dbTables.enum');
+const { user, products, likes } = require('../constants/dbTables.enum');
+const { ratings } = require('../constants/recipeSchemaFields.enum');
 
 const { normalizeDocument } = documentUtil;
-const { likes } = dbTablesEnum;
 
 module.exports = {
     getRecipes: async (req, res, next) => {
@@ -150,6 +150,32 @@ module.exports = {
             res
                 .status(SUCCESS)
                 .json({ likes: recipeLikes, count: likes.length });
+        } catch (e) {
+            next(e);
+        }
+    },
+
+    getRecipeById: async (req, res, next) => {
+        try {
+            const { recipe_id } = req.params;
+
+            const recipe = await Recipe
+                .findById(recipe_id)
+                .populate(user)
+                .populate(likes)
+                .populate(products)
+                .populate({
+                    path: ratings,
+                    select: '--v',
+                    populate: {
+                        path: user,
+                        select: '-password'
+                    }
+                });
+
+            res
+                .status(SUCCESS)
+                .json(recipe);
         } catch (e) {
             next(e);
         }

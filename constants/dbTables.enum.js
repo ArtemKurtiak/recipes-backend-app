@@ -22,5 +22,6 @@ module.exports = {
     product: 'product',
     forgetPasswordCode: 'forget_password_code',
     actionToken: 'action_token',
-    location: 'location'
+    location: 'location',
+    products: 'products'
 };
