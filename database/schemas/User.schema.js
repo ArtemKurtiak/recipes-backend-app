@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const { dbTablesEnum } = require('../../constants');
+const { recipe } = require('../../constants/dbTables.enum');
 
 const {
     user, followersCount, followsForCount, notification, location
@@ -43,7 +44,8 @@ const UserSchema = new Schema({
     },
     location: {
         type: [Number],
-    }
+    },
+    doneRecipes: [{ type: Schema.Types.ObjectId, ref: recipe }]
 }, { timestamps: true, toJSON: { virtuals: true } });
 
 UserSchema.virtual(followersCount).get(function() {

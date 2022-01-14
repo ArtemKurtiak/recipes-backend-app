@@ -8,11 +8,12 @@ module.exports = {
     checkUserRatingExists: async (req, res, next) => {
         try {
             const { _id: userId } = req.auth.user;
+            const { recipe_id } = req.body;
 
-            const userRating = await RecipeRating.findOne({ user: userId });
+            const userRating = await RecipeRating.findOne({ user: userId, recipe_id });
 
             if (userRating) {
-                throw new CustomError('You have already rated this meal', CONFLICT);
+                throw new CustomError('You have already rated this recipe', CONFLICT);
             }
 
             next();

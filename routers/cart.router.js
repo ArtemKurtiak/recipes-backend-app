@@ -2,17 +2,19 @@ const router = require('express').Router();
 
 const { cartControllers } = require('../controllers');
 const {
-    recipesMiddlewares, validationMiddlewares, authMiddlewares, cartMiddlewares, userMiddlewares
+    recipesMiddlewares, validationMiddlewares, authMiddlewares, cartMiddlewares, recipeRatingMiddlewares
 } = require('../middlewares');
 const { cartValidators } = require('../validators');
 
 const { correctIdValidator } = cartValidators;
 const { checkRecipeAlreadyInCart, checkRecipeExistsInCart } = cartMiddlewares;
 const { validateBySchema } = validationMiddlewares;
-const { checkRecipeExistsByParam, checkRecipeExists } = recipesMiddlewares;
+const { checkRecipeExistsByParam, checkRecipeExists, checkRecipeAlreadyDone } = recipesMiddlewares;
+const { checkUserRatingExists } = recipeRatingMiddlewares;
 const { checkAuthToken } = authMiddlewares;
-const { checkUserPermissionByParam } = userMiddlewares;
-const { addRecipeToCart, removeRecipeFromCart, getUserCart } = cartControllers;
+const {
+    addRecipeToCart, removeRecipeFromCart, getUserCart, markRecipeAsDone
+} = cartControllers;
 
 router.use(checkAuthToken);
 
@@ -28,8 +30,15 @@ router.post('/remove',
     checkRecipeExistsByParam('recipe_id', 'body', '_id'),
     checkRecipeExists,
     checkRecipeExistsInCart,
-    checkUserPermissionByParam('recipe_id'),
     removeRecipeFromCart);
+
+router.post('/mark-as-done',
+    validateBySchema('body', correctIdValidator),
+    checkRecipeExistsByParam('recipe_id', 'body', '_id'),
+    checkRecipeExists,
+    checkRecipeExistsInCart,
+    checkRecipeAlreadyDone,
+    markRecipeAsDone);
 
 router.get('/',
     getUserCart);

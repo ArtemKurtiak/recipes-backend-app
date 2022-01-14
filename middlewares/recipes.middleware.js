@@ -46,5 +46,20 @@ module.exports = {
         } catch (e) {
             next(e);
         }
+    },
+
+    checkRecipeAlreadyDone: async (req, res, next) => {
+        try {
+            const { recipe_id } = req.body;
+            const { doneRecipes } = req.auth.user;
+
+            if (doneRecipes.includes(recipe_id)) {
+                throw new CustomError('You have already done this recipe', CONFLICT);
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
     }
 };
